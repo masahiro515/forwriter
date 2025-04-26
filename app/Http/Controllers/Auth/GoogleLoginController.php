@@ -28,6 +28,6 @@ class GoogleLoginController extends Controller
 
         Auth::login($user);
 
-        return redirect('/home'); // またはトップページなどへリダイレクト
+        return redirect('/'); // またはトップページなどへリダイレクト
     }
 }
