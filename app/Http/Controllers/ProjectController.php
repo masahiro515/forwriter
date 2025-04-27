@@ -7,17 +7,21 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
 use App\Models\Category;
 use App\Models\Client;
+use App\Models\WorkType;
+
 
 class ProjectController extends Controller
 {
     private $project;
     private $category;
     private $client;
+    private $work_type;
 
-    public function __construct(Project $project, Category $category, Client $client){
+    public function __construct(Project $project, Category $category, Client $client, WorkType $work_type){
         $this->project = $project;
         $this->category = $category;
         $this->client = $client;
+        $this->work_type = $work_type;
     }
 
     public function create(){
@@ -55,10 +59,12 @@ class ProjectController extends Controller
     }
 
     public function show($id){
+        $all_work_types = $this->work_type->all();
         $project = $this->project->findOrFail($id);
 
         return view('projects.project-show')
-                ->with('project', $project);
+                ->with('project', $project)
+                ->with('all_work_types', $all_work_types);
     }
 
     public function updateStatus(Request $request, $id){

@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\WorkTypeController;
+use App\Http\Controllers\WorkSessionController;
 
 Auth::routes();
 
@@ -60,5 +61,10 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('/store', [WorkTypeController::class, 'store'])->name('store');
         Route::patch('/{id}/update', [WorkTypeController::class, 'update'])->name('update');
         Route::delete('/{id}/delete', [WorkTypeController::class, 'destroy'])->name('delete');
+    });
+
+    // Work Session
+    Route::group(['prefix' => 'WorkSession','as' => 'WorkSession.'], function(){
+        Route::post('/store', [WorkSessionController::class, 'store'])->name('store');
     });
 });
