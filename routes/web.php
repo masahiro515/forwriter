@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\PickupController;
 
 Auth::routes();
 
@@ -36,5 +37,11 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('/store', [ClientController::class, 'store'])->name('store');
         Route::patch('/{id}/update', [ClientController::class, 'update'])->name('update');
         Route::delete('/{id}/delete', [ClientController::class, 'destroy'])->name('delete');
+    });
+
+    // Pickup
+    Route::group(['prefix' => 'pickup','as' => 'pickup.'], function(){
+        Route::post('/{id}/store', [PickupController::class, 'store'])->name('store');
+        Route::delete('/{id}/delete', [PickupController::class, 'destroy'])->name('delete');
     });
 });

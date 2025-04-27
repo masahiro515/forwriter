@@ -27,7 +27,12 @@ class HomeController extends Controller
     public function index()
     {
         $all_projects = $this->project->all();
+        $order_deadline_projects = $this->project->orderBy('deadline', 'asc')->get();
+        $pickup_projects = Project::whereHas('pickup')->get();
+
         return view('home')
-                ->with('all_project', $all_projects);
+                ->with('all_projects', $all_projects)
+                ->with('order_deadline_projects', $order_deadline_projects)
+                ->with('pickup_projects', $pickup_projects);
     }
 }

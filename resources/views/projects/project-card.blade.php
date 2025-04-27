@@ -5,12 +5,26 @@
         {{-- タイトルと★ボタン --}}
         <div class="d-flex justify-content-between align-items-center mb-1">
             <h6 class="card-title mb-0">{{ $project->title }}（{{ $project->client->name }}）</h6>
-            <form method="POST" action="#" style="display: inline;">
-                @csrf
-                <button type="submit" class="btn btn-sm p-1 {{ $project->is_pickup ? 'btn-warning' : 'btn-outline-warning' }}">
-                    ★
-                </button>
-            </form>
+            @if ($project->isPickup())
+                <form action="{{ route('pickup.delete', $project->id) }}" method="post" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit" class="btn btn-sm p-1 btn-warning d-flex justify-content-center align-items-center"
+                        style="width: 25px; height: 25px;">
+                        ★
+                    </button>
+                </form>
+            @else
+                <form action="{{ route('pickup.store', $project->id) }}" method="post" class="d-inline">
+                    @csrf
+
+                    <button type="submit" class="btn btn-sm p-1 btn-outline-warning d-flex justify-content-center align-items-center"
+                        style="width: 25px; height: 25px;">
+                        ☆
+                    </button>
+                </form>
+            @endif
         </div>
 
         {{-- 納期 --}}
@@ -19,7 +33,17 @@
         {{-- ステータスとボタン --}}
         <div class="d-flex justify-content-between align-items-center">
             <span class="small">
-                ステータス: <span class="badge bg-primary">{{ $project->status }}</span>
+                ステータス: <span class="badge
+                @if ($project->status === '受注') bg-primary
+                @elseif ($project->status === '作業中') bg-danger
+                @elseif ($project->status === '確認中') bg-warning text-dark
+                @elseif ($project->status === '納品') bg-success
+                @elseif ($project->status === '完了') bg-secondary
+                @else bg-light text-dark
+                @endif
+                ">
+                    {{ $project->status }}
+                </span>
             </span>
 
             <div class="d-flex gap-2"> {{-- gap-2でボタン間に少しスペース --}}
@@ -28,6 +52,7 @@
                     タイマー開始
                 </button>
             </div>
+            @include('projects.modals.timer-modal')
         </div>
     </div>
 </div>

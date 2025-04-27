@@ -17,4 +17,12 @@ class Project extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
+
+    public function pickup(){
+        return $this->hasOne(Pickup::class);
+    }
+
+    public function isPickup(){
+        return $this->pickup()->where('project_id', $this->id)->exists();
+    }
 }
