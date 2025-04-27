@@ -53,13 +53,17 @@
                             <li class="nav-item" title="Create Project">
                                 <a href="{{ route('project.create') }}" class="nav-link"><i class="fa-solid fa-square-plus icon-sm"></i></a>
                             </li>
-                            {{-- Create Category --}}
-                            <li class="nav-item" title="Create Category">
-                                <a href="{{ route('category.create') }}" class="nav-link"><i class="fa-solid fa-table-list icon-sm"></i></a>
-                            </li>
-                            {{-- Create Client --}}
-                            <li class="nav-item" title="Create Client">
-                                <a href="{{ route('client.create') }}" class="nav-link"><i class="fa-solid fa-clipboard-user icon-sm"></i></a>
+
+                            <li class="nav-item dropdown mx-2">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fa-solid fa-table-list icon-sm"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a href="{{ route('client.create') }}" class="dropdown-item">クライアント登録</a>
+                                    <a href="{{ route('category.create') }}" class="dropdown-item">仕事内容登録</a>
+                                    <a href="{{ route('workType.create') }}" class="dropdown-item">作業内容登録</a>
+                                </div>
                             </li>
 
                             <li class="nav-item dropdown mx-2">

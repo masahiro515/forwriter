@@ -47,9 +47,9 @@
             </span>
 
             <div class="d-flex gap-2"> {{-- gap-2でボタン間に少しスペース --}}
-                <a href="#" class="btn btn-sm btn-outline-secondary">詳細</a>
+                <a href="{{ route('project.show', $project->id) }}" class="btn btn-sm btn-outline-secondary">詳細</a>
                 <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#timerModal">
-                    タイマー開始
+                    <i class="fa-solid fa-clock"></i>
                 </button>
             </div>
             @include('projects.modals.timer-modal')
