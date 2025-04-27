@@ -8,6 +8,9 @@
         <!-- 左カラム（ピックアップ案件） -->
         <div class="col-md-4 border-end" style="overflow-y: auto;">
             <h5 class="mt-3">ピックアップ案件</h5>
+            @foreach ($all_project as $project)
+                @include('projects.project-card', ['project' => $project])
+            @endforeach
             {{-- @foreach ($pickupProjects as $project)
                 @include('projects.project-card', ['project' => $project])
             @endforeach --}}

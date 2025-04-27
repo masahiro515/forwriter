@@ -104,7 +104,7 @@
                                         @endforeach
                                     </select>
                                 @else
-                                    <a href="#" class="d-block mt-2 text-decoration-none">クライアントを登録する</a>
+                                    <a href="{{ route('client.create') }}" class="d-block mt-2 text-decoration-none">クライアントを登録する</a>
                                 @endif
 
                                 @error('client_id')
@@ -123,7 +123,7 @@
                                         @endforeach
                                     </select>
                                 @else
-                                    <a href="#" class="d-block mt-2 text-decoration-none">仕事内容を登録する</a>
+                                    <a href="{{ route('category.create') }}" class="d-block mt-2 text-decoration-none">仕事内容を登録する</a>
                                 @endif
 
                                 @error('category_id')
@@ -131,8 +131,8 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-6 mb-4">
-                                <div class="row g-2"> {{-- g-2でボタン間スペースも少しあける --}}
+                            <div class="col-md-6 mb-4" style="margin-top:30px;">
+                                <div class="row g-2">
                                     <div class="col-6 d-grid">
                                         <a href="{{ route('home') }}" class="btn btn-outline-primary form-control">
                                             戻る

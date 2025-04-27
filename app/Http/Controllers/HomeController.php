@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Project;
 
 class HomeController extends Controller
 {
+
+    private $project;
+
+    public function __construct(Project $project){
+        $this->project = $project;
+    }
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -23,6 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $all_projects = $this->project->all();
+        return view('home')
+                ->with('all_project', $all_projects);
     }
 }
