@@ -5,25 +5,25 @@
 @section('content')
     <div class="container d-flex justify-content-center"> {{-- 追加した中央寄せの外枠 --}}
         <div class="row w-50">
-            <div class="form-group mb-2">
+            <div class="form-group">
                 <form action="{{ route('client.store') }}" method="post" class="d-flex">
                     @csrf
-                    <div class="mb-3 w-75">
+                    <div class="w-75">
                         <input type="text" name="name" id="name" placeholder="クライアント名を入力してください" class="form-control" autofocus>
                     </div>
-                    <div class="mb-3 w-25 ms-2">
+                    <div class="w-25 ms-2">
                         <button type="submit" class="btn btn-primary w-50">
                             登録
                         </button>
                     </div>
                 </form>
             </div>
-            <div class="form-group mb-2">
+            <div class="form-group mb-1">
                 <form action="{{ route('client.store') }}" method="post">
                     @csrf
-                    <div class="mb-3">
+                    <div>
                         <!-- 非表示のtextarea -->
-                        <textarea id="description" name="description" class="form-control mt-2" rows="3" placeholder="詳細も登録できます" style="display:none;"></textarea>
+                        <textarea id="description" name="description" class="form-control mt-1" rows="3" placeholder="詳細も登録できます" style="display:none;"></textarea>
                         <!-- 詳細入力ボタン -->
                         <button type="button" id="toggle-description" class="btn btn-success btn-sm mt-2">
                             詳細入力
