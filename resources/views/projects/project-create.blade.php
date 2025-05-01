@@ -60,7 +60,7 @@
                             {{-- Deadline --}}
                             <div class="col-md-6 mb-3">
                                 <label for="deadline" class="form-label">契約納期</label>
-                                <input id="deadline" type="date" name="deadline" class="form-control">
+                                <input id="deadline" type="date" name="deadline" class="form-control" value="{{ old('deadline', $selectedDate) }}">
                                 @error('deadline')
                                     <p class="text-danger small">{{ $message }}</p>
                                 @enderror

@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::patch('/{id}/update', [ProjectController::class, 'update'])->name('update');
         Route::delete('/{id}/delete', [ProjectController::class, 'destroy'])->name('delete');
         Route::get('/indexTable', [ProjectController::class, 'indexTable'])->name('indexTable');
+
     });
 
     // Category

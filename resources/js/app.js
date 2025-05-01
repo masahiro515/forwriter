@@ -23,9 +23,23 @@ document.addEventListener('DOMContentLoaded', function () {
             calendar = new Calendar(calendarEl, {
                 plugins: [dayGridPlugin, interactionPlugin],
                 initialView: 'dayGridMonth',
-                // selectable: false,//日付をマウスで選択できるかどうか
-                // editable: false,//ドラッグ、リサイズできるかどうか
-                events: '/api/events', // イベント取得API
+                selectable: true,//日付をマウスで選択できるかどうか
+                // editable: true,//ドラッグ、リサイズできるかどうか
+                events: '/api/projects', // イベント取得API
+
+                eventClick: function(info) {
+                    let projectId = info.event.id;
+                    if (projectId) {
+                        window.location.href = `/project/${projectId}/show`; // 先頭にスラッシュを追加
+                    }
+                    info.jsEvent.preventDefault();
+                },
+
+                // 日付をクリックした際の処理
+                dateClick: function(info) {
+                    let selectedDate = info.dateStr; // クリックされた日付（YYYY-MM-DD）
+                    window.location.href = `/project/create?date=${selectedDate}`; // 作成ページにリダイレクト
+                },
             });
 
             calendar.render();

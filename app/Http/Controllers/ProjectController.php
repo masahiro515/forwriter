@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
@@ -10,6 +12,8 @@ use App\Models\Client;
 use App\Models\WorkType;
 use App\Models\WorkSession;
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Log;
 
 
 class ProjectController extends Controller
@@ -28,13 +32,15 @@ class ProjectController extends Controller
         $this->work_session = $work_session;
     }
 
-    public function create(){
+    public function create(Request $request){
+        $selectedDate = $request->query('date');
         $all_categories = $this->category->all();
         $all_clients = $this->client->all();
 
         return view('projects.project-create')
                 ->with('all_categories', $all_categories)
-                ->with('all_clients', $all_clients);
+                ->with('all_clients', $all_clients)
+                ->with('selectedDate', $selectedDate);
     }
 
     public function store(Request $request){
@@ -202,4 +208,5 @@ class ProjectController extends Controller
                 ->with('all_projects', $all_projects)
                 ->with('all_work_types', $all_work_types);
     }
+
 }
