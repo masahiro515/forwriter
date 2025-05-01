@@ -29,7 +29,7 @@
                         <td>{{ $project->received_date }}</td>
                         <td>{{ $project->title }}</td>
                         <td>{{ $project->client->name }}</td>
-                        <td>
+                        <td class="d-flex justify-content-center">
                             <form method="POST" action="{{ route('project.updateStatus', $project->id) }}">
                                 @csrf
                                 @method('PATCH')
@@ -91,7 +91,7 @@
                                 @include('projects.modals.timer-modal')
 
                                 {{-- 編集ボタン --}}
-                                <a href="{{ route('project.edit', $project->id) }}" class="btn btn-sm btn-outline-warning d-flex justify-content-center align-items-center me-1"
+                                <a href="{{ route('project.edit', $project->id) }}" class="btn btn-sm btn-outline-warning d-flex justify-content-center align-items-center"
                                     style="width: 30px; height: 30px;">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>

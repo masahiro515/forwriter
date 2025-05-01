@@ -38,11 +38,19 @@ class ProjectController extends Controller
     }
 
     public function store(Request $request){
-        // $request->validate([
-        //     'category'    => 'required|array|between:1,3',
-        //     'description' => 'required|min:1|max:1000',
-        //     'image'       => 'required|mimes:jpeg,jpg,png,gif|max:1048'
-        // ]);
+        $request->validate([
+            'title'              => 'required|string|max:50',
+            'description'        => 'nullable|string|min:1|max:1000',
+            'received_date'      => 'required|date',
+            'temp_pay_date'      => 'nullable|date|after_or_equal:received_date',
+            'temp_deadline'      => 'nullable|date|after_or_equal:received_date',
+            'deadline'           => 'required|date|after_or_equal:received_date',
+            'cost_per_character' => 'nullable|numeric',
+            'deadline_character' => 'nullable|integer',
+            'temp_salary'        => 'nullable|numeric|min:0',
+            'client_id'          => 'required|exists:clients,id',
+            'category_id'        => 'required|exists:categories,id',
+        ]);
 
         $this->project->user_id     = Auth::user()->id;
         $this->project->title     = $request->title;
@@ -98,10 +106,6 @@ class ProjectController extends Controller
 
 
     public function updateStatus(Request $request, $id){
-        // $validated = $request->validate([
-        //     'status' => 'required|string|max:50',
-        // ]);
-
         $project = $this->project->findOrFail($id);
 
         $project->status = $request->status;
@@ -150,11 +154,19 @@ class ProjectController extends Controller
     }
 
     public function update(Request $request, $id){
-        // $request->validate([
-        //     'category'    => 'required|array|between:1,3',
-        //     'description' => 'required|min:1|max:1000',
-        //     'image'       => 'required|mimes:jpeg,jpg,png,gif|max:1048'
-        // ]);
+        $request->validate([
+            'title'              => 'required|string|max:50',
+            'description'        => 'nullable|string|min:1|max:1000',
+            'received_date'      => 'required|date',
+            'temp_pay_date'      => 'nullable|date|after_or_equal:received_date',
+            'temp_deadline'      => 'nullable|date|after_or_equal:received_date',
+            'deadline'           => 'required|date|after_or_equal:received_date',
+            'cost_per_character' => 'nullable|numeric',
+            'deadline_character' => 'nullable|integer',
+            'temp_salary'        => 'nullable|numeric|min:0',
+            'client_id'          => 'required|exists:clients,id',
+            'category_id'        => 'required|exists:categories,id',
+        ]);
 
         $project = $this->project->findOrFail($id);
 
@@ -184,7 +196,7 @@ class ProjectController extends Controller
 
     public function indexTable(){
         $all_work_types = $this->work_type->all();
-        $all_projects = $this->project->orderBy('received_date', 'asc')->paginate(20);
+        $all_projects = $this->project->orderBy('received_date', 'asc')->paginate(8);
 
         return view('projects.project-table')
                 ->with('all_projects', $all_projects)

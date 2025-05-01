@@ -21,9 +21,10 @@ class ClientController extends Controller
     }
 
     public function store(Request $request){
-        // $request->validate([
-        //     'category'    => 'required|min:1|max:50|unique:categories,name'
-        // ]);
+        $request->validate([
+            'name'    => 'required|min:1|max:50|unique:categories,name',
+            'description'        => 'nullable|string|min:1|max:1000'
+        ]);
 
         $this->client->name = $request->name;
         $this->client->description = $request->description;
@@ -33,9 +34,10 @@ class ClientController extends Controller
     }
 
     public function update(Request $request,$id){
-        // $request->validate([
-        //     'category'    => 'required|min:1|max:50|unique:categories,name'
-        // ]);
+        $request->validate([
+            'name'    => 'required|min:1|max:50|unique:categories,name',
+            'description'        => 'nullable|string|min:1|max:1000',
+        ]);
 
         $client = $this->client->findOrFail($id);
         $client->name = $request->name;

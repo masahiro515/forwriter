@@ -21,9 +21,9 @@ class CategoryController extends Controller
     }
 
     public function store(Request $request){
-        // $request->validate([
-        //     'category'    => 'required|min:1|max:50|unique:categories,name'
-        // ]);
+        $request->validate([
+            'category'    => 'required|min:1|max:50|unique:categories,name'
+        ]);
 
         $this->category->name = $request->category;
         $this->category->save();
@@ -32,9 +32,9 @@ class CategoryController extends Controller
     }
 
     public function update(Request $request,$id){
-        // $request->validate([
-        //     'category'    => 'required|min:1|max:50|unique:categories,name'
-        // ]);
+        $request->validate([
+            'category'    => 'required|min:1|max:50|unique:categories,name'
+        ]);
 
         $category = $this->category->findOrFail($id);
         $category->name = $request->category;

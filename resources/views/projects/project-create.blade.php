@@ -15,7 +15,7 @@
                             {{-- Title --}}
                             <div class="col-md-6 mb-3">
                                 <label for="title" class="form-label">案件名</label>
-                                <input id="title" type="text" name="title" class="form-control" maxlength="50" required placeholder="案件タイトルを入力">
+                                <input id="title" type="text" name="title" class="form-control" maxlength="50" placeholder="案件タイトルを入力">
                                 @error('title')
                                     <p class="text-danger small">{{ $message }}</p>
                                 @enderror
@@ -33,7 +33,7 @@
                             {{-- Received Date --}}
                             <div class="col-md-6 mb-3">
                                 <label for="received_date" class="form-label">受注日</label>
-                                <input id="received_date" type="date" name="received_date" class="form-control" required>
+                                <input id="received_date" type="date" name="received_date" class="form-control">
                                 @error('received_date')
                                     <p class="text-danger small">{{ $message }}</p>
                                 @enderror
@@ -60,7 +60,7 @@
                             {{-- Deadline --}}
                             <div class="col-md-6 mb-3">
                                 <label for="deadline" class="form-label">契約納期</label>
-                                <input id="deadline" type="date" name="deadline" class="form-control" required>
+                                <input id="deadline" type="date" name="deadline" class="form-control">
                                 @error('deadline')
                                     <p class="text-danger small">{{ $message }}</p>
                                 @enderror
@@ -69,7 +69,7 @@
                             {{-- Cost per Character --}}
                             <div class="col-md-6 mb-3">
                                 <label for="cost_per_character" class="form-label">文字単価</label>
-                                <input id="cost_per_character" type="number" name="cost_per_character" class="form-control" placeholder="例：1文字1円">
+                                <input id="cost_per_character" type="number" name="cost_per_character" class="form-control" placeholder="例：1">
                                 @error('cost_per_character')
                                     <p class="text-danger small">{{ $message }}</p>
                                 @enderror
@@ -97,7 +97,7 @@
                             <div class="col-md-6 mb-3">
                                 <label for="client_id" class="form-label">クライアント選択</label>
                                 @if ($all_clients->isNotEmpty())
-                                    <select id="client_id" name="client_id" class="form-select" required>
+                                    <select id="client_id" name="client_id" class="form-select">
                                         <option value="" selected>クライアントを選択してください</option>
                                         @foreach ($all_clients as $client)
                                             <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -116,7 +116,7 @@
                             <div class="col-md-6 mb-4">
                                 <label for="category_id" class="form-label">仕事内容選択</label>
                                 @if ($all_categories->isNotEmpty())
-                                    <select id="category_id" name="category_id" class="form-select" required>
+                                    <select id="category_id" name="category_id" class="form-select">
                                         <option value="" selected>仕事内容を選択してください</option>
                                         @foreach ($all_categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
