@@ -142,7 +142,7 @@
                     <form method="GET" action="{{ route('project.show', $project->id) }}">
                         <p>
                             <select name="work_type_id" onchange="this.form.submit()" class="form-select d-inline w-auto">
-                                <option value="" {{ request('work_type_id') ? '' : 'selected' }}>時間を確認する作業を選んでください</option>
+                                <option value="" {{ request('work_type_id') ? '' : 'selected' }}>作業別の時間を確認しましょう</option>
                                 @foreach($all_work_types as $type)
                                     <option value="{{ $type->id }}" {{ request('work_type_id') == $type->id ? 'selected' : '' }}>
                                         {{ $type->name }}
