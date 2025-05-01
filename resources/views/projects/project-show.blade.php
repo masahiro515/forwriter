@@ -107,17 +107,17 @@
 
                 {{-- 中央カラム --}}
                 <div class="col-md-4">
-                    <h6 class="text-muted">文字数・給与</h6>
+                    <h6 class="text-muted">文字数・報酬</h6>
                     <p><strong>文字単価:</strong> {{ $project->cost_per_character ? number_format($project->cost_per_character) . ' 円' : '未設定' }}</p>
                     <p><strong>納品予定文字数:</strong> {{ $project->deadline_character ?? '未設定' }}</p>
-                    <p><strong>仮給与:</strong> {{ $project->temp_salary ? number_format($project->temp_salary) . ' 円' : '未設定' }}</p>
+                    <p><strong>仮報酬:</strong> {{ $project->temp_salary ? number_format($project->temp_salary) . ' 円' : '未設定' }}</p>
 
                     {{-- 確定給与（編集可能） --}}
                     <form method="POST" action="{{ route('project.updateSalary', $project->id) }}">
                         @csrf
                         @method('PATCH')
                         <div class="d-flex align-items-center mb-2">
-                            <strong class="me-2">確定給与:</strong>
+                            <strong class="me-2">確定報酬:</strong>
                             <input type="number" name="salary" value="{{ $project->salary }}" class="form-control form-control-sm w-auto"
                                 onchange="this.form.submit()">
                             <span class="ms-1">円</span>

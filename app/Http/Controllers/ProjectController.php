@@ -181,4 +181,13 @@ class ProjectController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function indexTable(){
+        $all_work_types = $this->work_type->all();
+        $all_projects = $this->project->orderBy('received_date', 'asc')->paginate(20);
+
+        return view('projects.project-table')
+                ->with('all_projects', $all_projects)
+                ->with('all_work_types', $all_work_types);
+    }
 }

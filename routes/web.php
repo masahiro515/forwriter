@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/{id}/edit', [ProjectController::class, 'edit'])->name('edit');
         Route::patch('/{id}/update', [ProjectController::class, 'update'])->name('update');
         Route::delete('/{id}/delete', [ProjectController::class, 'destroy'])->name('delete');
+        Route::get('/indexTable', [ProjectController::class, 'indexTable'])->name('indexTable');
     });
 
     // Category

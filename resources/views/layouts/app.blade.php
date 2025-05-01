@@ -54,6 +54,11 @@
                                 <a href="{{ route('project.create') }}" class="nav-link"><i class="fa-solid fa-square-plus icon-sm"></i></a>
                             </li>
 
+                            {{-- Create Project --}}
+                            <li class="nav-item" title="Create Project">
+                                <a href="{{ route('project.indexTable') }}" class="nav-link"><i class="fa-solid fa-table icon-sm"></i></a>
+                            </li>
+
                             <li class="nav-item dropdown mx-2">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="fa-solid fa-table-list icon-sm"></i>
