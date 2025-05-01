@@ -139,8 +139,23 @@
                 {{-- 右カラム --}}
                 <div class="col-md-4">
                     <h6 class="text-muted">作業情報</h6>
-                    <p><strong>執筆時間:</strong> {{ $project->writing_time ? $project->writing_time . ' 分' : '未計測' }}</p>
-                    <p><strong>総作業時間:</strong> {{ $project->total_work_time ? $project->total_work_time . ' 分' : '未計測' }}</p>
+                    <form method="GET" action="{{ route('project.show', $project->id) }}">
+                        <p>
+                            <select name="work_type_id" onchange="this.form.submit()" class="form-select d-inline w-auto">
+                                <option value="" {{ request('work_type_id') ? '' : 'selected' }}>時間を確認する作業を選んでください</option>
+                                @foreach($all_work_types as $type)
+                                    <option value="{{ $type->id }}" {{ request('work_type_id') == $type->id ? 'selected' : '' }}>
+                                        {{ $type->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            @if(request('work_type_id'))
+                                <p>{{ formatMinutes($workingMinutes) }}</p>
+                            @endif
+                        </p>
+                    </form>
+                    <p><strong>総作業時間:</strong> {{ formatMinutes($totalMinutes) }}</p>
 
                     <h6 class="text-muted mt-3">案件詳細</h6>
                     <div class="border p-2 bg-light small">

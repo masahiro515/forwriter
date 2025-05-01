@@ -26,8 +26,6 @@ return new class extends Migration
             $table->integer('temp_salary')->nullable();
             $table->integer('salary')->nullable();
             $table->integer('total_characters')->nullable();
-            $table->integer('writing_time')->nullable();
-            $table->integer('total_work_time')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('category_id');

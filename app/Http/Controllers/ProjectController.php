@@ -8,6 +8,8 @@ use App\Models\Project;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\WorkType;
+use App\Models\WorkSession;
+use Illuminate\Support\Facades\DB;
 
 
 class ProjectController extends Controller
@@ -16,12 +18,14 @@ class ProjectController extends Controller
     private $category;
     private $client;
     private $work_type;
+    private $work_session;
 
-    public function __construct(Project $project, Category $category, Client $client, WorkType $work_type){
+    public function __construct(Project $project, Category $category, Client $client, WorkType $work_type, WorkSession $work_session){
         $this->project = $project;
         $this->category = $category;
         $this->client = $client;
         $this->work_type = $work_type;
+        $this->work_session = $work_session;
     }
 
     public function create(){
@@ -58,14 +62,40 @@ class ProjectController extends Controller
         return redirect()->route('home');
     }
 
-    public function show($id){
-        $all_work_types = $this->work_type->all();
+    public function show($id, Request $request){
         $project = $this->project->findOrFail($id);
+        $all_work_types = $this->work_type->all();
+        $user_id = Auth::user()->id;
 
-        return view('projects.project-show')
-                ->with('project', $project)
-                ->with('all_work_types', $all_work_types);
+        // GETパラメータから選択されたwork_type_idを取得（なければ先頭のIDを使う）
+        $selectedWorkTypeId = $request->query('work_type_id', $all_work_types->first()->id ?? null);
+
+        // 指定されたwork_typeの作業時間（分）
+        $workingMinutes = (int) (
+            WorkSession::where('user_id', $user_id)
+                ->where('project_id', $project->id)
+                ->where('work_type_id', $selectedWorkTypeId)
+                ->select(DB::raw('SUM(TIMESTAMPDIFF(MINUTE, start_time, end_time)) as total'))
+                ->value('total') ?? 0
+        );
+
+        // 総作業時間（分）
+        $totalMinutes = (int) (
+            WorkSession::where('user_id', $user_id)
+                ->where('project_id', $project->id)
+                ->select(DB::raw('SUM(TIMESTAMPDIFF(MINUTE, start_time, end_time)) as total'))
+                ->value('total') ?? 0
+        );
+
+        return view('projects.project-show', [
+            'project' => $project,
+            'all_work_types' => $all_work_types,
+            'selectedWorkTypeId' => $selectedWorkTypeId,
+            'workingMinutes' => $workingMinutes,
+            'totalMinutes' => $totalMinutes,
+        ]);
     }
+
 
     public function updateStatus(Request $request, $id){
         // $validated = $request->validate([
