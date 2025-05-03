@@ -23,6 +23,7 @@ class CalendarController extends Controller
                 'id' => $project->id,
                 'title' => $project->title,
                 'start' => $project->deadline,
+                'synced' => $project->synced_to_google_at && $project->updated_at->lte($project->synced_to_google_at),
             ];
         });
 

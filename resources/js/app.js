@@ -42,11 +42,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const syncBtn = document.getElementById('sync-google-calendar');
             if (syncBtn) {
                 syncBtn.addEventListener('click', async function () {
-                    const events = calendar.getEvents().map(event => ({
-                        title: event.title,
-                        start: event.start.toISOString(),
-                        end: event.end ? event.end.toISOString() : null,
-                    }));
+                    const events = calendar.getEvents()
+                        .filter(event => !event.extendedProps.synced) // 未同期のイベントだけ
+                        .map(event => ({
+                            id: event.id,
+                            title: event.title,
+                            start: event.start.toISOString(),
+                            end: event.end ? event.end.toISOString() : null,
+                        }));
 
                     try {
                         const response = await fetch('/api/sync-google-calendar', {

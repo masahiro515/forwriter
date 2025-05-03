@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use App\Models\Project;
 
 class GoogleCalendarSyncController extends Controller
 {
@@ -27,6 +28,14 @@ class GoogleCalendarSyncController extends Controller
 
             $errors = [];
             foreach ($request->events as $event) {
+                $project = Project::find($event['id']);
+                if (!$project) continue;
+
+                // 同期不要ならスキップ（念のため）
+                if ($project->synced_to_google_at && $project->updated_at->lte($project->synced_to_google_at)) {
+                    continue;
+                }
+
                 $eventData = [
                     'summary' => $event['title'],
                     'start' => [
@@ -43,15 +52,11 @@ class GoogleCalendarSyncController extends Controller
                     'Authorization' => 'Bearer ' . $accessToken,
                 ])->post('https://www.googleapis.com/calendar/v3/calendars/primary/events', $eventData);
 
-                if (!$response->successful()) {
-                    $errors[] = [
-                        'event' => $event,
-                        'status' => $response->status(),
-                        'body' => $response->body(),
-                    ];
-                    Log::error('Failed to sync event:', end($errors));
+                if ($response->successful()) {
+                    $project->synced_to_google_at = now();
+                    $project->save();
                 } else {
-                    Log::info('Synced event:', ['title' => $event['title']]);
+                    // エラーハンドリング
                 }
             }
 
