@@ -18,6 +18,8 @@ Auth::routes();
 Route::get('login/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [GoogleLoginController::class, 'handleGoogleCallback']);
 
+Route::middleware('auth')->post('api/sync-google-calendar', [GoogleCalendarSyncController::class, 'sync']);
+
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -72,5 +74,3 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('/store', [WorkSessionController::class, 'store'])->name('store');
     });
 });
-
-Route::middleware('auth')->post('api/sync-google-calendar', [GoogleCalendarSyncController::class, 'sync']);
