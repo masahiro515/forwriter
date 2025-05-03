@@ -10,6 +10,8 @@ use App\Http\Controllers\PickupController;
 use App\Http\Controllers\WorkTypeController;
 use App\Http\Controllers\WorkSessionController;
 
+use App\Http\Controllers\GoogleCalendarSyncController;
+
 Auth::routes();
 
 //OAuth for google
@@ -70,3 +72,5 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('/store', [WorkSessionController::class, 'store'])->name('store');
     });
 });
+
+Route::middleware('auth')->post('api/sync-google-calendar', [GoogleCalendarSyncController::class, 'sync']);
