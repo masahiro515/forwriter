@@ -7,9 +7,6 @@ use App\Http\Controllers\CalendarController;
 
 Route::middleware('api')->group(function () {
     Route::get('/projects', [CalendarController::class, 'index']);
-
-
-
 });
 
 

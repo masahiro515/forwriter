@@ -19,12 +19,18 @@ Auth::routes();
 Route::get('login/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [GoogleLoginController::class, 'handleGoogleCallback']);
 
-Route::middleware('auth')->post('api/sync-google-calendar', [GoogleCalendarSyncController::class, 'sync']);
-Route::middleware('auth')->get('api/stats', [StatisticsController::class, 'monthlyAndWeeklyStats']);
+// Route::middleware('auth')->post('api/sync-google-calendar', [GoogleCalendarSyncController::class, 'sync']);
+// Route::middleware('auth')->get('api/stats', [StatisticsController::class, 'monthlyAndWeeklyStats']);
+// Route::middleware('auth')->get('api/summary', [StatisticsController::class, 'summary']);
+
 // routes/web.php
 Route::get('/statistics', function () {
     return view('users.data'); // グラフを含むBladeテンプレート
-});
+})->name('statistics');
+
+Route::get('/statistics/summary', function () {
+    return view('users.data-sum');
+})->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -78,5 +84,17 @@ Route::group(['middleware' => 'auth'], function(){
     // Work Session
     Route::group(['prefix' => 'WorkSession','as' => 'WorkSession.'], function(){
         Route::post('/store', [WorkSessionController::class, 'store'])->name('store');
+    });
+
+    // API
+    Route::group(['prefix' => 'api','as' => 'api.'], function(){
+        Route::post('/sync-google-calendar', [GoogleCalendarSyncController::class, 'sync']);
+        Route::get('/stats', [StatisticsController::class, 'monthlyAndWeeklyStats']);
+        Route::get('/summary', [StatisticsController::class, 'summary']);
+        Route::get('/charts', [StatisticsController::class, 'charts']);
+    });
+
+    Route::group(['prefix' => 'statistics','as' => 'statistics.'], function(){
+        Route::get('/statistics/summary', function () {return view('users.data-sum');})->name('summary');
     });
 });

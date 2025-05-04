@@ -87,14 +87,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // For Data
 document.addEventListener('DOMContentLoaded', async () => {
-    const res = await fetch('/api/stats'); // 必要に応じてURLを変更
+    // 初期ロード：月別文字数チャート
+    const res = await fetch('/api/stats');
     const data = await res.json();
 
     const labels = data.monthly.characters.map(item => item.period);
     const characterCounts = data.monthly.characters.map(item => item.total_characters);
 
     const ctx = document.getElementById('monthlyCharactersChart').getContext('2d');
-
     new Chart(ctx, {
         type: 'line',
         data: {
@@ -116,9 +116,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 title: {
                     display: true,
                     text: '月別総文字数の推移',
-                    font: {
-                        size: 18
-                    }
+                    font: { size: 18 }
                 },
                 tooltip: {
                     callbacks: {
@@ -129,18 +127,90 @@ document.addEventListener('DOMContentLoaded', async () => {
             scales: {
                 y: {
                     beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: '文字数'
-                    }
+                    title: { display: true, text: '文字数' }
                 },
                 x: {
-                    title: {
-                        display: true,
-                        text: '年月'
-                    }
+                    title: { display: true, text: '年月' }
                 }
             }
         }
     });
 });
+
+// チャート用変数（破棄のため）
+let jobChart, workChart, clientChart;
+
+function renderPieChart(ctx, data, labelKey, valueKey) {
+    const labels = data.map(d => d[labelKey]);
+    const values = data.map(d => d[valueKey]);
+
+    return new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: labels.map(() => `hsl(${Math.random() * 360}, 60%, 70%)`)
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: context => `${context.label}: ${context.parsed.toLocaleString()}`
+                    }
+                }
+            }
+        }
+    });
+}
+
+document.getElementById('filterForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = new FormData(this);
+    const start = form.get('start');
+    const end = form.get('end');
+
+    const params = new URLSearchParams();
+    if (start) params.append('start', start);
+    if (end) params.append('end', end);
+
+    // 数値データ取得
+    const summaryRes = await fetch(`/api/summary?${params.toString()}`);
+    const summary = await summaryRes.json();
+
+    document.getElementById('projectCount').textContent = summary.project_count;
+    document.getElementById('totalCharacters').textContent = summary.total_characters.toLocaleString();
+    document.getElementById('totalSalary').textContent = summary.total_salary.toLocaleString();
+    document.getElementById('totalMinutes').textContent = summary.total_minutes;
+    document.getElementById('charactersPerHour').textContent = summary.characters_per_hour;
+    document.getElementById('hourlyRate').textContent = summary.hourly_rate;
+
+    // 円グラフデータ取得
+    const chartRes = await fetch(`/api/charts?${params.toString()}`);
+    const charts = await chartRes.json();
+
+    // グラフ更新（破棄 → 再描画）
+    if (jobChart) jobChart.destroy();
+    if (workChart) workChart.destroy();
+    if (clientChart) clientChart.destroy();
+
+    jobChart = renderPieChart(
+        document.getElementById('jobTypeChart').getContext('2d'),
+        charts.job_types, 'label', 'count'
+    );
+
+    workChart = renderPieChart(
+        document.getElementById('workTypeChart').getContext('2d'),
+        charts.work_types, 'label', 'minutes'
+    );
+
+    clientChart = renderPieChart(
+        document.getElementById('clientChart').getContext('2d'),
+        charts.clients, 'label', 'count'
+    );
+});
+
+

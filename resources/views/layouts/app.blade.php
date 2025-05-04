@@ -87,9 +87,14 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <!-- Profile -->
+                                    <a href="{{ route('statistics.summary') }}" class="dropdown-item">
+                                        <i class="fa-solid fa-circle-user"></i> Writer Data
+                                    </a>
+
+                                    <!-- Logout -->
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
