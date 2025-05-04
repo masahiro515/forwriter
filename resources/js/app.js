@@ -1,9 +1,12 @@
 import './bootstrap';
 
+import Chart from 'chart.js/auto';
+
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
+// For Calendar
 let calendar;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -82,5 +85,62 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// For Data
+document.addEventListener('DOMContentLoaded', async () => {
+    const res = await fetch('/api/stats'); // 必要に応じてURLを変更
+    const data = await res.json();
 
+    const labels = data.monthly.characters.map(item => item.period);
+    const characterCounts = data.monthly.characters.map(item => item.total_characters);
 
+    const ctx = document.getElementById('monthlyCharactersChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '月別文字数',
+                data: characterCounts,
+                borderColor: '#42a5f5',
+                backgroundColor: 'rgba(66, 165, 245, 0.2)',
+                tension: 0.3,
+                fill: true,
+                pointRadius: 4,
+                pointHoverRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '月別総文字数の推移',
+                    font: {
+                        size: 18
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (context) => `${context.parsed.y.toLocaleString()} 文字`
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: '文字数'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: '年月'
+                    }
+                }
+            }
+        }
+    });
+});

@@ -11,6 +11,7 @@ use App\Http\Controllers\WorkTypeController;
 use App\Http\Controllers\WorkSessionController;
 
 use App\Http\Controllers\GoogleCalendarSyncController;
+use App\Http\Controllers\StatisticsController;
 
 Auth::routes();
 
@@ -19,6 +20,11 @@ Route::get('login/google', [GoogleLoginController::class, 'redirectToGoogle'])->
 Route::get('login/google/callback', [GoogleLoginController::class, 'handleGoogleCallback']);
 
 Route::middleware('auth')->post('api/sync-google-calendar', [GoogleCalendarSyncController::class, 'sync']);
+Route::middleware('auth')->get('api/stats', [StatisticsController::class, 'monthlyAndWeeklyStats']);
+// routes/web.php
+Route::get('/statistics', function () {
+    return view('users.data'); // グラフを含むBladeテンプレート
+});
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/', [HomeController::class, 'index'])->name('home');
