@@ -67,7 +67,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td>クライアント情報を登録しましょう</td>
+                            <td colspan="3" class="text-center">クライアント情報を登録しましょう</td>
                         </tr>
                     @endforelse
                 </tbody>
