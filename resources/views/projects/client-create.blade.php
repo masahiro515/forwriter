@@ -16,11 +16,8 @@
                             登録
                         </button>
                     </div>
-                </form>
             </div>
             <div class="form-group mb-1">
-                <form action="{{ route('client.store') }}" method="post">
-                    @csrf
                     <div>
                         <!-- 非表示のtextarea -->
                         <textarea id="description" name="description" class="form-control mt-1" rows="3" placeholder="詳細も登録できます" style="display:none;"></textarea>
@@ -40,16 +37,23 @@
             <table class="table table-hover align-middle bg-white border text-secondary">
                 <thead class="small table-success text-secondary">
                     <tr>
-                        <th>クライアント名</th>
-                        <th>詳細</th>
-                        <th></th>
+                        <th style="width: 25%;">クライアント名</th>
+                        <th style="width: 55%;">詳細</th>
+                        <th style="width: 20%; text-align: right;"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($all_clients as $client)
                         <tr>
                             <td>{{ $client->name }}</td>
-                            <td>{{ $client->description }}</td>
+                            <td>
+                                <div class="description-preview" style="max-height: 4.5em; overflow: hidden; position: relative;" id="desc-{{ $client->id }}">
+                                    {{ $client->description }}
+                                </div>
+                                @if(Str::length($client->description) > 100)
+                                    <button class="btn btn-link p-0" onclick="toggleDescription({{ $client->id }})" id="btn-{{ $client->id }}">続きを読む</button>
+                                @endif
+                            </td>
                             <td class="text-end">
                                 <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#edit-client-{{ $client->id }}">
                                     <i class="fa-solid fa-pen"></i>
@@ -84,6 +88,19 @@
                 descriptionTextarea.style.display = 'none';
             }
         });
+
+        function toggleDescription(id) {
+            const desc = document.getElementById(`desc-${id}`);
+            const btn = document.getElementById(`btn-${id}`);
+
+            if (desc.style.maxHeight && desc.style.maxHeight !== 'none') {
+                desc.style.maxHeight = 'none';
+                btn.textContent = '閉じる';
+            } else {
+                desc.style.maxHeight = '4.5em'; // 約3行
+                btn.textContent = '続きを読む';
+            }
+        }
     </script>
 @endsection
 

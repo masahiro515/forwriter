@@ -39,7 +39,7 @@
                 {{-- 右カラム --}}
                 <div class="col-md-4">
                     <h6 class="text-muted">作業時間</h6>
-                    <p><strong>総作業時間:</strong> <span id="totalMinutes">-</span> 分</p>
+                    <p><strong>総作業時間:</strong> <span id="totalMinutes">-</span></p>
                     <p><strong>時給換算:</strong> <span id="hourlyRate">-</span> 円</p>
                 </div>
             </div>

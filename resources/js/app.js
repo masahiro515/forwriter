@@ -6,7 +6,7 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
-// For Calendar
+// ********************** Calendar **********************
 let calendar;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -85,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// For Data
-// チャート用変数（破棄のため）
+
+// ********************** Data **********************
 let jobChart, workChart, clientChart;
 
 function renderPieChart(ctx, data, labelKey, valueKey) {
@@ -103,12 +103,22 @@ function renderPieChart(ctx, data, labelKey, valueKey) {
             }]
         },
         options: {
-            responsive: true,
             plugins: {
-                legend: { position: 'bottom' },
                 tooltip: {
                     callbacks: {
-                        label: context => `${context.label}: ${context.parsed.toLocaleString()}`
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.raw;
+
+                            // 時間を変換
+                            if (valueKey === 'minutes') {
+                                const hours = Math.floor(value / 60);
+                                const minutes = value % 60;
+                                return `${label}: ${hours}時間${minutes}分`;
+                            }
+
+                            return `${label}: ${value}`;
+                        }
                     }
                 }
             }
@@ -133,7 +143,13 @@ document.getElementById('filterForm').addEventListener('submit', async function(
     document.getElementById('projectCount').textContent = summary.project_count;
     document.getElementById('totalCharacters').textContent = summary.total_characters.toLocaleString();
     document.getElementById('totalSalary').textContent = summary.total_salary.toLocaleString();
-    document.getElementById('totalMinutes').textContent = summary.total_minutes;
+
+    // ここを修正（◯時間◯分に変換）
+    const totalMinutes = summary.total_minutes;
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    document.getElementById('totalMinutes').textContent = `${hours}時間${minutes}分`;
+
     document.getElementById('charactersPerHour').textContent = summary.characters_per_hour;
     document.getElementById('hourlyRate').textContent = summary.hourly_rate;
 
@@ -161,5 +177,3 @@ document.getElementById('filterForm').addEventListener('submit', async function(
         charts.clients, 'label', 'count'
     );
 });
-
-

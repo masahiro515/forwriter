@@ -22,7 +22,7 @@ class WorkTypeController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'work_type'    => 'required|min:1|max:50|unique:categories,name'
+            'work_type'    => 'required|min:1|max:50|unique:work_types,name'
         ]);
 
         $this->work_type->name = $request->work_type;
@@ -33,7 +33,7 @@ class WorkTypeController extends Controller
 
     public function update(Request $request, $id){
         $request->validate([
-            'work_type'    => 'required|min:1|max:50|unique:categories,name'
+            'work_type'    => 'required|min:1|max:50|unique:work_types,name'
         ]);
 
         $work_type = $this->work_type->findOrFail($id);

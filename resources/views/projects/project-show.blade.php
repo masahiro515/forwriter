@@ -173,6 +173,7 @@
             {{-- 戻るボタン --}}
             <div class="mt-4">
                 <a href="{{ route('home') }}" class="btn btn-outline-secondary">一覧に戻る</a>
+                <a href="{{ route('notes.index', $project->id) }}" class="btn btn-secondary">進捗メモ</a>
             </div>
         </div>
     </div>

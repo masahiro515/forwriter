@@ -9,6 +9,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\WorkTypeController;
 use App\Http\Controllers\WorkSessionController;
+use App\Http\Controllers\ProgressNoteController;
 
 use App\Http\Controllers\GoogleCalendarSyncController;
 use App\Http\Controllers\StatisticsController;
@@ -48,7 +49,14 @@ Route::group(['middleware' => 'auth'], function(){
         Route::patch('/{id}/update', [ProjectController::class, 'update'])->name('update');
         Route::delete('/{id}/delete', [ProjectController::class, 'destroy'])->name('delete');
         Route::get('/indexTable', [ProjectController::class, 'indexTable'])->name('indexTable');
+    });
 
+    // Note
+    Route::group(['prefix' => 'notes','as' => 'notes.'], function(){
+        Route::get('/{id}/index', [ProgressNoteController::class, 'index'])->name('index');
+        Route::post('/{id}/store', [ProgressNoteController::class, 'store'])->name('store');
+        Route::patch('/{id}/update', [ProgressNoteController::class, 'update'])->name('update');
+        Route::delete('/{id}/delete', [ProgressNoteController::class, 'destroy'])->name('delete');
     });
 
     // Category

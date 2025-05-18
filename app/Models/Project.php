@@ -25,4 +25,8 @@ class Project extends Model
     public function isPickup(){
         return $this->pickup()->where('project_id', $this->id)->exists();
     }
+
+    public function ProgressNotes(){
+        return $this->hasMany(ProgressNote::class);
+    }
 }
