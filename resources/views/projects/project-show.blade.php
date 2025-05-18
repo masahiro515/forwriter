@@ -159,7 +159,7 @@
 
                     <h6 class="text-muted mt-3">案件詳細</h6>
                     <div class="border p-2 bg-light small">
-                        {{ $project->description ?? '説明はありません。' }}
+                        {!! nl2br(linkify($project->description ?? '説明はありません。' )) !!}
                     </div>
                 </div>
             </div>

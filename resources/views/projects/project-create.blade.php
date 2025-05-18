@@ -24,7 +24,7 @@
                             {{-- Description --}}
                             <div class="col-md-6 mb-3">
                                 <label for="description" class="form-label">案件詳細</label>
-                                <textarea id="description" name="description" class="form-control" rows="3" placeholder="案件の詳細を入力"></textarea>
+                                <textarea id="description" name="description" class="form-control" rows="3" placeholder="案件の詳細、googleドキュメントURLなど入力"></textarea>
                                 @error('description')
                                     <p class="text-danger small">{{ $message }}</p>
                                 @enderror

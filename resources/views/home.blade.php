@@ -15,7 +15,7 @@
 
         <!-- 中央カラム（ステータス別） -->
         <div class="col-md-4" style="overflow-y: auto;">
-            <h5 class="mt-3">ステータス別案件</h5>
+            <h5 class="mt-3">{{ $startOfMonth->format('Y年n月') }}受注案件</h5>
             <!-- ステータスフィルター -->
             <div class="mb-3">
                 <form method="GET" action="{{ route('home') }}">
