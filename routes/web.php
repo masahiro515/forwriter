@@ -16,10 +16,6 @@ use App\Http\Controllers\StatisticsController;
 
 Auth::routes();
 
-Route::get('/', function () {
-    return 'Hello from Laravel without auth!';
-});
-
 //OAuth for google
 Route::get('login/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [GoogleLoginController::class, 'handleGoogleCallback']);
