@@ -19,6 +19,11 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
 </head>
+<style>
+    .icon-sm {
+    font-size: 2rem;
+    }
+</style>
 <body class="bg-light">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="border-bottom: 2px solid #f8f9fa;">
