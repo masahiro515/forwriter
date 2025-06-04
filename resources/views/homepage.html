@@ -2,10 +2,64 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>My App ホームページ</title>
+  <title>forwriter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: sans-serif;
+      line-height: 1.6;
+      margin: 2rem;
+      max-width: 800px;
+    }
+    header {
+      margin-bottom: 2rem;
+    }
+    footer {
+      margin-top: 3rem;
+      border-top: 1px solid #ccc;
+      padding-top: 1rem;
+    }
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <h1>ようこそ！My App へ</h1>
-  <p>このアプリはGoogleカレンダーと連携します。</p>
+  <header>
+    <h1>forwriter ホームページ</h1>
+  </header>
+
+  <main>
+    <p><strong>forwriter</strong> は、Webライターがクライアントや納期などの案件情報を管理し、文字数や報酬を可視化することでモチベーションを維持するためのアプリです。</p>
+
+    <h2>主な機能</h2>
+    <ul>
+      <li>Googleアカウントでの安全なログイン</li>
+      <li>アプリ内カレンダー情報のGoogle Calendarへの同期</li>
+      <li>案件情報の管理</li>
+      <li>作業時間の自動記録</li>
+      <li>報酬や執筆時間などのデータ管理、可視化</li>
+    </ul>
+
+    <h2>ユーザーデータの取り扱いについて</h2>
+    <p>当アプリは、Googleアカウント情報およびカレンダーへのアクセスを必要とします。取得した情報は以下の目的にのみ使用されます。</p>
+    <ul>
+      <li>本人確認およびログインのためのGoogleアカウント情報の使用</li>
+      <li>カレンダー予定の表示および追加処理のためのGoogle Calendar APIの使用</li>
+    </ul>
+    <p>取得した情報は第三者に提供されることはありません。</p>
+
+    <p>詳細は以下の <a href="https://forwriter-app-7d8622396eef.herokuapp.com/privacy.html" target="_blank">プライバシーポリシー</a> をご確認ください。</p>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 My App. All rights reserved.</p>
+    <p><a href="https://forwriter-app-7d8622396eef.herokuapp.com/privacy.html" target="_blank">プライバシーポリシーを見る</a></p>
+  </footer>
 </body>
 </html>
+
