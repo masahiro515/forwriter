@@ -16,6 +16,14 @@ use App\Http\Controllers\StatisticsController;
 
 Auth::routes();
 
+Route::get('/homepage.html', function () {
+    return view('homepage'); // ホームページ
+});
+
+Route::get('/privacy.html', function () {
+    return view('privacy'); // プライバシーポリシー
+});
+
 //OAuth for google
 Route::get('login/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [GoogleLoginController::class, 'handleGoogleCallback']);
